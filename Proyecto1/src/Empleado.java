@@ -93,6 +93,21 @@ public class Empleado {
 
     @Override
     public String toString() {
-        return "Nombre: "+getNombre()+" - Cedula: "+getCedula();
+      StringBuilder sb=new StringBuilder();
+
+      sb.append("Nombre: ").append(getNombre()).append(" - Cédula: ").append(getCedula()).append("\n");
+      sb.append("Métodos de Autenticación Asociados:\n");
+
+        if (autenticaciones.isEmpty()) {
+            sb.append("   [No tiene métodos registrados]\n");
+        } else {
+            for (MetodoAuten metodo : autenticaciones) {
+                // Esto llama automáticamente al toString() de Huella, Token o Rostro
+                sb.append("   -> ").append(metodo.toString()).append("\n");
+                sb.append("      --------------------\n");
+            }
+        }
+
+        return sb.toString();
     }
 }

@@ -106,6 +106,19 @@ public class MainMetodos {
                     }
                 }break;
                 case 7:{
+                    System.out.println("Ingrese una cedula para buscar los metodos de autenticacion del empleado: ");
+                    cedula = sc.nextLine();
+                    int indiceEm= u.buscarEmpleado(cedula);
+                    int total=u.cantidadMetodos(cedula);
+
+                    if (indiceEm!=-1){
+                        System.out.println("El empleado "+u.getListaEmpleados().get(indiceEm).getNombre()+" tiene "+
+                                total+" metodos de autenticacion registrados");
+                    }else {
+                        System.out.println("Empleado no existe.");
+                    }
+                }break;
+                case 8:{
 
                 }
             }

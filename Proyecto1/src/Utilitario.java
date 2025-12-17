@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class  Utilitario {
+public class    Utilitario {
     private List<Empleado> listaEmpleados;
 
     public Utilitario() {
@@ -90,6 +90,16 @@ public class  Utilitario {
         }
     }
 
+    public int cantidadMetodos(String cedula) {
+        int indice = buscarEmpleado(cedula);
+        if (indice != -1) {
+            return listaEmpleados.get(indice).getAutenticaciones().size();
+        } else {
+            System.out.println("Empleado no existe");
+            return -1;
+        }
+    }
+
 
 
     public String autenticacionMayorSeguridad(String cedula,int nivel){
@@ -135,8 +145,8 @@ public class  Utilitario {
     public String mostrarDatosEmpleados(){
         StringBuilder sb =new StringBuilder();
 
-        for(int i = 0; i < listaEmpleados.size(); i++){
-            sb.append(listaEmpleados.get(i).toString());
+        for(Empleado eM: listaEmpleados){
+            sb.append(eM);
             sb.append("\n");
         }return sb.toString();
     }
