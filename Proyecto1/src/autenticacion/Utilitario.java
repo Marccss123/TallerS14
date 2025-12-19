@@ -1,3 +1,5 @@
+package autenticacion;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class    Utilitario {
         if (indice == -1) {
             listaEmpleados.add(new Empleado(cedula, nombre));
         } else {
-            System.out.printf("Empleado con la cedula %s ya existe", cedula);
+            System.out.printf("autenticacion.Empleado con la cedula %s ya existe", cedula);
         }
     }
 
@@ -54,6 +56,8 @@ public class    Utilitario {
             if (cantidadAutenticacionRostro(cedula)==0){
                // if (listaEmpleados.get(indice).cantidadRegistroRostro()==0)
                 listaEmpleados.get(indice).adicionarAutenticacion(new ReconocimientoFacial(lvlsSeguridad, patronRostro));
+            }else {
+                System.out.println("El empleado ya tiene un rostro registrado.");
             }
         } else {
             System.out.println("El empleado no existe");
@@ -64,40 +68,32 @@ public class    Utilitario {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             return listaEmpleados.get(indice).cantidadRegistroHuella();
-        } else {
-            System.out.println("Empleado no existe");
-            return -1;
         }
+        return -1;
     }
 
     public int cantidadAutenticacionToken(String cedula) {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             return listaEmpleados.get(indice).cantidadRegistroToken();
-        } else {
-            System.out.println("Empleado no existe");
-            return -1;
         }
+        return -1;
     }
 
     public int cantidadAutenticacionRostro(String cedula) {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             return listaEmpleados.get(indice).cantidadRegistroRostro();
-        } else {
-            System.out.println("Empleado no existe");
-            return -1;
         }
+        return -1;
     }
 
     public int cantidadMetodos(String cedula) {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             return listaEmpleados.get(indice).getAutenticaciones().size();
-        } else {
-            System.out.println("Empleado no existe");
-            return -1;
         }
+        return -1;
     }
 
 
@@ -107,7 +103,7 @@ public class    Utilitario {
         if (indice != -1) {
             return listaEmpleados.get(indice).seguridadMayorUmbral(nivel);
         } else {
-            System.out.println("Empleado no existe");
+            System.out.println("autenticacion.Empleado no existe");
             return null;
         }
     }
@@ -122,7 +118,7 @@ public class    Utilitario {
                 return "Acceso denegado";
             }
         }else {
-            return "Empleado ya existe";
+            return "Empleado no existe";
         }
     }
 
@@ -139,7 +135,7 @@ public class    Utilitario {
             System.out.println("10. Total métodos facial empleado");
             System.out.println("11. Métodos mayor a umbral de empleado");
             System.out.println("12. Autenticar empleado");
-            System.out.println("14. Salir");
+            System.out.println("13. Salir");
     }
 
     public String mostrarDatosEmpleados(){

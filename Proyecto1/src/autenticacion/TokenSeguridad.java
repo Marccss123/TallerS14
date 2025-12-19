@@ -1,4 +1,6 @@
-public class TokenSeguridad extends MetodoAuten{
+package autenticacion;
+
+public class TokenSeguridad extends MetodoAuten {
     private String token;
 
     public TokenSeguridad(int lvlSeguridad, String token) {

@@ -1,3 +1,5 @@
+package autenticacion;
+
 public class ReconocimientoFacial extends MetodoAuten {
     private String patronRostro;
 

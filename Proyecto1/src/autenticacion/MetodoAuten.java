@@ -1,3 +1,5 @@
+package autenticacion;
+
 public abstract class MetodoAuten {
         private int lvlSeguridad;
         private String tipo;

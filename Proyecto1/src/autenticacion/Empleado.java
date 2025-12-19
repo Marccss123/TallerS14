@@ -1,3 +1,5 @@
+package autenticacion;
+
 import java.util.*;
 
 public class Empleado {

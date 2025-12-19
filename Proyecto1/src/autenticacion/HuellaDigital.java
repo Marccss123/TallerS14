@@ -1,4 +1,6 @@
-public class HuellaDigital extends MetodoAuten{
+package autenticacion;
+
+public class HuellaDigital extends MetodoAuten {
     private String patronHuella;
 
     public HuellaDigital(int lvlSeguridad, String patronHuella) {
