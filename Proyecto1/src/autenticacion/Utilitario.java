@@ -3,7 +3,7 @@ package autenticacion;
 import java.util.ArrayList;
 import java.util.List;
 
-public class    Utilitario {
+public class Utilitario {
     private List<Empleado> listaEmpleados;
 
     public Utilitario() {
@@ -19,7 +19,7 @@ public class    Utilitario {
         if (indice == -1) {
             listaEmpleados.add(new Empleado(cedula, nombre));
         } else {
-            System.out.printf("autenticacion.Empleado con la cedula %s ya existe", cedula);
+            System.out.printf("Empleado con la cedula %s ya existe\n", cedula);
         }
     }
 
@@ -36,8 +36,6 @@ public class    Utilitario {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             listaEmpleados.get(indice).adicionarAutenticacion(new HuellaDigital(lvlsSeguridad, huella));
-        } else {
-            System.out.println("El empleado no existe");
         }
     }
 
@@ -45,22 +43,17 @@ public class    Utilitario {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             listaEmpleados.get(indice).adicionarAutenticacion(new TokenSeguridad(lvlsSeguridad, token));
-        } else {
-            System.out.println("El empleado no existe");
         }
     }
 
     public void agregarAutenticacionRostro(String cedula, String patronRostro, int lvlsSeguridad) {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
-            if (cantidadAutenticacionRostro(cedula)==0){
-               // if (listaEmpleados.get(indice).cantidadRegistroRostro()==0)
+            if (cantidadAutenticacionRostro(cedula) == 0) {
                 listaEmpleados.get(indice).adicionarAutenticacion(new ReconocimientoFacial(lvlsSeguridad, patronRostro));
-            }else {
+            } else {
                 System.out.println("El empleado ya tiene un rostro registrado.");
             }
-        } else {
-            System.out.println("El empleado no existe");
         }
     }
 
@@ -96,56 +89,49 @@ public class    Utilitario {
         return -1;
     }
 
-
-
-    public String autenticacionMayorSeguridad(String cedula,int nivel){
+    public String autenticacionMayorSeguridad(String cedula, int nivel) {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             return listaEmpleados.get(indice).seguridadMayorUmbral(nivel);
-        } else {
-            System.out.println("autenticacion.Empleado no existe");
-            return null;
         }
+        return "";
     }
 
-    public String autenticarUtil(String tipo, String dato, String cedula){
-        int indice=buscarEmpleado(cedula);
-        if (indice!=-1){
-            boolean b= listaEmpleados.get(indice).autenticar(dato, tipo);
-            if (b){
+    public String autenticarUtil(String tipo, String dato, String cedula) {
+        int indice = buscarEmpleado(cedula);
+        if (indice != -1) {
+            boolean b = listaEmpleados.get(indice).autenticar(dato, tipo);
+            if (b) {
                 return "Acceso concedido";
-            }else{
+            } else {
                 return "Acceso denegado";
             }
-        }else {
-            return "Empleado no existe";
         }
+        return "Empleado no existe";
     }
 
-    public void menu(){
-            System.out.println("1. Agregar Empleado");
-            System.out.println("2. Agregar token seguridad");
-            System.out.println("3. Agregar reconocimiento facial");
-            System.out.println("4. Agregar huella digital");
-            System.out.println("5. Mostrar datos de empleados (todos)");
-            System.out.println("6. Buscar empleado y mostrar datos");
-            System.out.println("7. Total métodos autenticación empleado");
-            System.out.println("8. Total métodos huella empleado");
-            System.out.println("9. Total métodos token empleado");
-            System.out.println("10. Total métodos facial empleado");
-            System.out.println("11. Métodos mayor a umbral de empleado");
-            System.out.println("12. Autenticar empleado");
-            System.out.println("13. Salir");
+    public void menu() {
+        System.out.println("1. Agregar Empleado");
+        System.out.println("2. Agregar token seguridad");
+        System.out.println("3. Agregar reconocimiento facial");
+        System.out.println("4. Agregar huella digital");
+        System.out.println("5. Mostrar datos de empleados (todos)");
+        System.out.println("6. Buscar empleado y mostrar datos");
+        System.out.println("7. Total métodos autenticación empleado");
+        System.out.println("8. Total métodos huella empleado");
+        System.out.println("9. Total métodos token empleado");
+        System.out.println("10. Total métodos facial empleado");
+        System.out.println("11. Métodos mayor a umbral de empleado");
+        System.out.println("12. Autenticar empleado");
+        System.out.println("13. Salir");
     }
 
-    public String mostrarDatosEmpleados(){
-        StringBuilder sb =new StringBuilder();
-
-        for(Empleado eM: listaEmpleados){
+    public String mostrarDatosEmpleados() {
+        StringBuilder sb = new StringBuilder();
+        for (Empleado eM : listaEmpleados) {
             sb.append(eM);
             sb.append("\n");
-        }return sb.toString();
+        }
+        return sb.toString();
     }
-
-
 }
