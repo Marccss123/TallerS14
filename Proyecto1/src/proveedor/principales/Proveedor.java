@@ -5,19 +5,16 @@ import java.util.*;
 public abstract class Proveedor {
     private String nombre;
     private String pais;
-    private String tipo;
     private List<Contrato> listaContratos;
 
     public Proveedor(String nombre, String pais, String tipo) {
         this.nombre = nombre;
         this.pais = pais;
-        this.tipo = tipo;
         listaContratos=new ArrayList<>();
     }
 
     public String getNombre() {return nombre;}
     public String getPais() {return pais;}
-    public String getTipo(){return tipo;}
     public List<Contrato> getListaContratos() {return listaContratos;}
 
     public void setNombre(String nombre) {this.nombre = nombre;}

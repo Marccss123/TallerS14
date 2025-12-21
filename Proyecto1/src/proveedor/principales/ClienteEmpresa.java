@@ -17,7 +17,7 @@ public class ClienteEmpresa {
 
     public boolean verificarProveedor(String tipo){
         for (Proveedor p:listaProveedores){
-            if (p.getTipo().equalsIgnoreCase(tipo)){
+            if (p.tipoProveedor().equalsIgnoreCase(tipo)){
                 return true;
             }
         }
