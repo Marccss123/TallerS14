@@ -62,9 +62,9 @@ public class Utilitario {
         }
     }
 
+    //Metodo para crear contratos solo a Clientes que tengan asociado un proveedor
     public void crearContratosProveedorCliente(String nombreCliente, String nombreProveedor, double precio, int duracioMeses){
         ClienteEmpresa ce= buscarCliente(nombreCliente);
-
         if (ce!=null){
             if (ce.getListaProveedores().isEmpty()){
                 System.out.println("No existen proveedores asociados con el cliente "+nombreCliente);
@@ -80,6 +80,7 @@ public class Utilitario {
         }
     }
 
+    //Metodo auxiliar para encontrar el proveedor asociado con el cliente y agregarle un contrato posteriormente
     public Proveedor recorrerProveedores(ClienteEmpresa ce, String nombreP){
             for(Proveedor p:ce.getListaProveedores()){
                 if (p.getNombre().equalsIgnoreCase(nombreP)){
@@ -87,6 +88,20 @@ public class Utilitario {
                 }
             }
             return null;
+    }
+
+    public void listarContratosActivos(){
+        if (listaClientesEmpresas.isEmpty()) {
+            System.out.println("No hay clientes en el sistema.");
+            return;
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("Total de contratos Activos en el Sistema\n");
+        for (ClienteEmpresa ce : listaClientesEmpresas) {
+            sb.append("CLIENTE: ").append(ce.getNombre()).append("\n");
+            sb.append(ce.obtenerContratosCliente());
+        }
+        System.out.println(sb.toString());
     }
 
 

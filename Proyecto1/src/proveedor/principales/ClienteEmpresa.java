@@ -24,15 +24,21 @@ public class ClienteEmpresa {
         return false;
     }
 
-    public void imprimirContratosCliente(){
+    public String obtenerContratosCliente(){
+        StringBuilder sb=new StringBuilder();
         for (Proveedor p:listaProveedores){
-            System.out.println("Proveedor: "+p.getNombre());
+            sb.append("Proveedor: ").append(p.getNombre()).append("\n");
             for (Contrato c: p.getListaContratos()){
                 if (c.isActivo()){
-                    System.out.println(c);
+                    sb.append(c.toString()).append("\n");
                 }
             }
         }
+        if (sb.length() == 0) {
+            return "   [Sin contratos activos]\n";
+        }
+
+        return sb.toString();
     }
 
 

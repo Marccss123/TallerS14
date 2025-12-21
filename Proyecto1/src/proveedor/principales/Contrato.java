@@ -17,7 +17,7 @@ public class Contrato {
     //Get solo regresa el estado
     public boolean isActivo() {return activo;}
 
-    //Metodo para cnacelar el contrato
+    //Metodo para cancelar el contrato
     public void cancelarContrato() {this.activo = false;}
 
     //Metodos
