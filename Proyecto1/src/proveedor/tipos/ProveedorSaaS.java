@@ -6,7 +6,7 @@ import proveedor.principales.Proveedor;
 
 public class ProveedorSaaS extends Proveedor {
     public ProveedorSaaS(String nombre, String pais) {
-        super(nombre, pais, "SaaS");
+        super(nombre, pais);
     }
 
     @Override

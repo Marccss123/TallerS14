@@ -7,7 +7,7 @@ public abstract class Proveedor {
     private String pais;
     private List<Contrato> listaContratos;
 
-    public Proveedor(String nombre, String pais, String tipo) {
+    public Proveedor(String nombre, String pais) {
         this.nombre = nombre;
         this.pais = pais;
         listaContratos=new ArrayList<>();
@@ -20,8 +20,8 @@ public abstract class Proveedor {
     public void setNombre(String nombre) {this.nombre = nombre;}
     public void setPais(String pais) {this.pais = pais;}
 
-    public void agregarContrato(double Precio, int duracionM){
-        listaContratos.add(new Contrato(Precio,duracionM));
+    public void agregarContrato(double precio, int duracionM){
+        listaContratos.add(new Contrato(precio,duracionM));
         System.out.println("Contrato agregado");
     }
 

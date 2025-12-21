@@ -6,7 +6,7 @@ import proveedor.principales.Proveedor;
 public class ProveedorCloud extends Proveedor {
 
     public ProveedorCloud(String nombre, String pais) {
-        super(nombre, pais, "Cloud");
+        super(nombre, pais);
     }
 
     @Override

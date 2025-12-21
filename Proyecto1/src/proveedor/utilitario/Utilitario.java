@@ -56,9 +56,27 @@ public class Utilitario {
 
         if (ce!=null){
             ce.agregarProveedor(cualquierP);
+            System.out.println("Proveedor agregado al cliente "+nombre);
         }else {
             System.out.println("Cliente no existe.");
         }
     }
+
+    public void crearContratosProveedorCliente(String nombreCliente, String nombreProveedor, double precio, int duracioMeses){
+        for (ClienteEmpresa ce:listaClientesEmpresas){
+            if (ce.getNombre().equalsIgnoreCase(nombreCliente)){
+                if (ce.getListaProveedores().isEmpty()){
+                    System.out.println("No existen proveedores asociados con el cliente "+nombreCliente);
+                }else {
+                    for (Proveedor p: ce.getListaProveedores()){
+                        if (p.getNombre().equalsIgnoreCase(nombreProveedor)){
+                            p.agregarContrato(precio,duracioMeses);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
 
 }
