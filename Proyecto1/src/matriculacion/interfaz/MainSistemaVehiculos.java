@@ -148,6 +148,6 @@ public class MainSistemaVehiculos {
                 System.out.println("Error: Debes ingresar un número válido. Intenta de nuevo.");
                 opc = 0;
             }
-        } while (opc != 10);
+        } while (opc!=10);
     }
 }
