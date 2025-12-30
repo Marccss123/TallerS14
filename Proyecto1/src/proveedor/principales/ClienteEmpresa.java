@@ -41,6 +41,20 @@ public class ClienteEmpresa {
         return sb.toString();
     }
 
+    public void listarProveedores(){
+        if (listaProveedores.isEmpty()) {
+            System.out.println("No hay clientes en el sistema.");
+            return;
+        }
+
+        StringBuilder sb=new StringBuilder();
+        sb.append("\t----PROVEEDORES ASOCIADOS AL CLIENTE----\n");
+        for (Proveedor p:listaProveedores){
+            sb.append("Nombre: ").append(p.getNombre()).append(" - País: ").append(p.getPais()).append("\n");
+        }
+        System.out.println(sb.toString());
+    }
+
 
 
 

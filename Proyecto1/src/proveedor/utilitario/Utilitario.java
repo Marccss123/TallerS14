@@ -20,6 +20,7 @@ public class Utilitario {
 
         if (nuevoCliente==null){
             listaClientesEmpresas.add(new ClienteEmpresa(nombre));
+            System.out.println("Cliente "+nombre+" creado exitosamente!");
         }else{
             System.out.println("Cliente ya existe");
         }
@@ -107,6 +108,7 @@ public class Utilitario {
         }
         System.out.println(sb.toString());
     }
+
 
     public void menu(){
         System.out.println("-----MENU-----");
