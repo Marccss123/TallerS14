@@ -2,6 +2,7 @@ package proveedor;
 
 import jdk.jshell.execution.Util;
 import proveedor.principales.ClienteEmpresa;
+import proveedor.principales.Contrato;
 import proveedor.principales.Proveedor;
 import proveedor.utilitario.Utilitario;
 
@@ -43,7 +44,7 @@ public class MainProveedor {
                         nombreProveedor=sc.nextLine();
                         System.out.print("Ingrese el país del proveedor: ");
                         pais=sc.nextLine();
-                        System.out.print("Ingrese el tipo del proveedor (1 -> Cloud , 2 -> SaaS , 3 -> Pasarelas Pago)");
+                        System.out.print("Ingrese el tipo del proveedor (1.Cloud , 2.SaaS , 3.Pasarelas Pago)");
                         tipo=Integer.parseInt(sc.nextLine());
 
                         //Crear Proveedor
@@ -87,7 +88,35 @@ public class MainProveedor {
                             System.out.print("Escriba el nombre del proveedor con el que quiere generar un contrato: ");
                             nombreProveedor=sc.nextLine();
 
+                            Proveedor existeProveedor= u.recorrerProveedores(unaEmpresa, nombreProveedor);
+                            if (existeProveedor!=null){
+                                System.out.print("Escriba la duración del contrato en meses: ");
+                                duracionEnMeses=Integer.parseInt(sc.nextLine());
+                                System.out.print("Ingrese el monto a pagar por el contrato: ");
+                                precio=Double.parseDouble(sc.nextLine());
 
+                                //Creamos el proveedor
+                                existeProveedor.agregarContrato(precio, duracionEnMeses);
+                            }else {
+                                System.out.println("Error: El proveedor '" + nombreProveedor + "' no está asociado a este cliente.");
+                            }
+                        }else {
+                            System.out.println("Error: Cliente no encontrado.");
+                        }
+                    }
+                    case 5:{
+                        System.out.println("\t----BUSCAR PROVEEDORES SEGUN SU TIPO----");
+                        System.out.print("Escriba el nombre del cliente, para verificar sus proveedores: ");
+                        nombreCliente=sc.nextLine();
+
+                        //Buscamos cliente
+                        ClienteEmpresa clienteEncontrado= u.buscarCliente(nombreCliente);
+                        //Pedimos el tipo
+                        boolean verificacion;
+                        if (clienteEncontrado!=null){
+                            System.out.print("Ingrese el tipo de proveedor que desea buscar: ");
+                            tipo=Integer.parseInt(sc.nextLine());
+                            verificacion=clienteEncontrado.verificarProveedor(tipo);
                         }
                     }
                 }
