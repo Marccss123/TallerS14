@@ -1,4 +1,4 @@
-package autenticacion;
+package autenticacion.negocio;
 
 public class TokenSeguridad extends MetodoAuten {
     private String token;

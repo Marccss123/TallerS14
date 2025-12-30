@@ -1,4 +1,4 @@
-package autenticacion;
+package autenticacion.negocio;
 
 import java.util.*;
 

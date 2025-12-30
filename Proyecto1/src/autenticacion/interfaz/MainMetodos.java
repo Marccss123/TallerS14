@@ -1,4 +1,6 @@
-package autenticacion;
+package autenticacion.interfaz;
+
+import autenticacion.util.Utilitario;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;

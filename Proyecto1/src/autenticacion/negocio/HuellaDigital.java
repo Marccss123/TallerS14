@@ -1,4 +1,4 @@
-package autenticacion;
+package autenticacion.negocio;
 
 public class HuellaDigital extends MetodoAuten {
     private String patronHuella;

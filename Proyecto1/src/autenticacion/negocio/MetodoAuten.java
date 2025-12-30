@@ -1,4 +1,4 @@
-package autenticacion;
+package autenticacion.negocio;
 
 public abstract class MetodoAuten {
         private int lvlSeguridad;

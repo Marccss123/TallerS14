@@ -1,4 +1,9 @@
-package autenticacion;
+package autenticacion.util;
+
+import autenticacion.negocio.Empleado;
+import autenticacion.negocio.HuellaDigital;
+import autenticacion.negocio.ReconocimientoFacial;
+import autenticacion.negocio.TokenSeguridad;
 
 import java.util.ArrayList;
 import java.util.List;
