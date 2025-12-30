@@ -35,20 +35,24 @@ public class Utilitario {
     }
 
 
+    public Proveedor crearProveedor(String nombre, String pais, int tipo) {
+        Proveedor nuevoP = null;
 
-    public ProveedorSaaS crearProveedorSaaS( String nombre, String pais){
-        ProveedorSaaS ps= new ProveedorSaaS(nombre,pais);
-        return ps;
-    }
-
-    public ProveedorCloud crearProveedorCloud( String nombre, String pais){
-        ProveedorCloud pc= new ProveedorCloud(nombre,pais);
-        return pc;
-    }
-
-    public ProveedorPasarelasPago crearProveedorPP( String nombre, String pais){
-        ProveedorPasarelasPago pp= new ProveedorPasarelasPago(nombre,pais);
-        return pp;
+        switch (tipo) {
+            case 1:
+                nuevoP = new ProveedorCloud(nombre, pais);
+                break;
+            case 2:
+                nuevoP = new ProveedorSaaS(nombre, pais);
+                break;
+            case 3:
+                nuevoP = new ProveedorPasarelasPago(nombre, pais);
+                break;
+            default:
+                System.out.println("Error: Tipo de proveedor no válido.");
+                break;
+        }
+        return nuevoP;
     }
 
     public void asociarProveedorCliente(String nombre, Proveedor cualquierP){
