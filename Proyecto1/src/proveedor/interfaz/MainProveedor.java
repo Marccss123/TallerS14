@@ -1,4 +1,4 @@
-package proveedor;
+package proveedor.interfaz;
 
 import proveedor.principales.ClienteEmpresa;
 import proveedor.principales.Proveedor;
