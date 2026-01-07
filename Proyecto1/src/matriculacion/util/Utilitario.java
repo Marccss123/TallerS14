@@ -87,7 +87,7 @@ public class Utilitario {
             if (v instanceof  Auto){
                 Auto a = (Auto) v;
                 sb.append(a);
-                sb.append("\n");
+                sb.append("\n").append("--------");
             }
         } return sb.toString();
     }
@@ -97,7 +97,7 @@ public class Utilitario {
         sb.append("----LISTA DE PROPIETARIOS----\n");
         for(int i = 0; i < propietarios.size(); i++){
             sb.append(propietarios.get(i).toString());
-            sb.append("\n");
+            sb.append("\n").append("--------");
         }return sb.toString();
     }
 
