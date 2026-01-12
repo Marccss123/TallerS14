@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.List;
 import java.util.Scanner;
+import proveedor.excepciones.*;
 
 public class MainProveedor {
     public static void main(String[] args) {
@@ -60,8 +61,12 @@ public class MainProveedor {
                         System.out.print("Escriba un nombre para el nuevo cliente: ");
                         nombreCliente = sc.nextLine();
 
-                        //Crear cliente
-                        u.crearCliente(nombreCliente);
+                        try {
+                            //Crear cliente
+                            u.crearCliente(nombreCliente);
+                        }catch (ClienteYaExisteException e){
+                            System.out.println("Error: " + e.getMessage());
+                        }
                     }
                     break;
 
@@ -102,49 +107,45 @@ public class MainProveedor {
 
                             //Asociar
                             if (proveedorSeleccionado != null) {
-                                u.asociarProveedorCliente(clienteSeleccionado.getNombre(), proveedorSeleccionado);
+                                try {
+                                    u.asociarProveedorCliente(clienteSeleccionado.getNombre(), proveedorSeleccionado);
+                                }catch (ClienteNoEncontradoException e){
+                                    System.out.println("Error: " + e.getMessage());
+                                }
                             }
                         }
-                    }
-                    break;
+                    }break;
 
                     case 4: {
                         if (u.getListaClientesEmpresas().isEmpty()) {
                             System.out.println("Error: No hay clientes en el sistema.");
                             break;
                         }
-
                         System.out.println("----CREAR CONTRATOS----");
-                        System.out.print("Escriba el nombre de un cliente para buscar sus proveedores: ");
-                        nombreCliente = sc.nextLine();
 
-                        //Buscamos cliente
-                        ClienteEmpresa unaEmpresa = u.buscarCliente(nombreCliente);
+                        try {
+                            System.out.print("Escriba el nombre del cliente: ");
+                            nombreCliente = sc.nextLine();
+                            
+                            ClienteEmpresa ce = u.buscarCliente(nombreCliente);
+                            if(ce != null) ce.listarProveedores();
 
-                        if (unaEmpresa != null) {
-                            unaEmpresa.listarProveedores();
-                            System.out.print("Escriba el nombre del proveedor con el que quiere generar un contrato: ");
+                            System.out.print("Nombre del proveedor para el contrato: ");
                             nombreProveedor = sc.nextLine();
 
-                            //Validamos si el proveedor existe en el cliente
-                            Proveedor existeProveedor = u.recorrerProveedores(unaEmpresa, nombreProveedor);
+                            System.out.print("Duración (meses): ");
+                            duracionEnMeses = Integer.parseInt(sc.nextLine());
+                            System.out.print("Monto a pagar: ");
+                            precio = Double.parseDouble(sc.nextLine());
 
-                            if (existeProveedor != null) {
-                                System.out.print("Escriba la duración del contrato en meses: ");
-                                duracionEnMeses = Integer.parseInt(sc.nextLine());
-                                System.out.print("Ingrese el monto a pagar por el contrato: ");
-                                precio = Double.parseDouble(sc.nextLine());
+                            u.crearContratosProveedorCliente(nombreCliente, nombreProveedor, precio, duracionEnMeses);
 
-                                //Creamos el contrato
-                                existeProveedor.agregarContrato(precio, duracionEnMeses);
-                            } else {
-                                System.out.println("Error: El proveedor no está asociado a este cliente.");
-                            }
-                        } else {
-                            System.out.println("Error: Cliente no encontrado.");
+                        } catch (ClienteNoEncontradoException | ProveedorNoAsociadoException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Ingrese números válidos para precio/duración.");
                         }
-                    }
-                    break;
+                    }break;
 
                     case 5: {
                         if (u.getListaClientesEmpresas().isEmpty()) {

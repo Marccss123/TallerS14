@@ -4,6 +4,7 @@ import proveedor.principales.Proveedor;
 import proveedor.tipos.ProveedorCloud;
 import proveedor.tipos.ProveedorPasarelasPago;
 import proveedor.tipos.ProveedorSaaS;
+import proveedor.excepciones.*;
 
 import java.util.*;
 
@@ -15,14 +16,14 @@ public class Utilitario {
     public List<ClienteEmpresa> getListaClientesEmpresas() {return listaClientesEmpresas;}
     /////////////////////////////////
 
-    public void crearCliente(String nombre){
-        ClienteEmpresa nuevoCliente= buscarCliente(nombre);
+    public void crearCliente(String nombre) throws ClienteYaExisteException {
+        ClienteEmpresa nuevoCliente = buscarCliente(nombre);
 
-        if (nuevoCliente==null){
+        if (nuevoCliente == null){
             listaClientesEmpresas.add(new ClienteEmpresa(nombre));
-            System.out.println("Cliente "+nombre+" creado exitosamente!");
-        }else{
-            System.out.println("Cliente ya existe");
+            System.out.println("Cliente " + nombre + " creado exitosamente!");
+        } else {
+            throw new ClienteYaExisteException("El cliente '" + nombre + "' ya existe en el sistema.");
         }
     }
 
@@ -56,32 +57,34 @@ public class Utilitario {
         return nuevoP;
     }
 
-    public void asociarProveedorCliente(String nombre, Proveedor cualquierP){
+    public void asociarProveedorCliente(String nombre, Proveedor cualquierP) throws ClienteNoEncontradoException{
         ClienteEmpresa ce=buscarCliente(nombre);
 
         if (ce!=null){
             ce.agregarProveedor(cualquierP);
             System.out.println("Proveedor agregado al cliente "+nombre);
         }else {
-            System.out.println("Cliente no existe.");
+            throw new ClienteNoEncontradoException("No se encontró el cliente '" + nombre + "' para asociar.");
         }
     }
 
     //Metodo para crear contratos solo a Clientes que tengan asociado un proveedor
-    public void crearContratosProveedorCliente(String nombreCliente, String nombreProveedor, double precio, int duracioMeses){
-        ClienteEmpresa ce= buscarCliente(nombreCliente);
-        if (ce!=null){
-            if (ce.getListaProveedores().isEmpty()){
-                System.out.println("No existen proveedores asociados con el cliente "+nombreCliente);
-            }else {
-                Proveedor p=recorrerProveedores(ce,nombreProveedor);
-                if (p!=null){
-                    p.agregarContrato(precio,duracioMeses);
-                }
-                else{
-                    System.out.println("No se encontro el proveedor "+nombreProveedor);
-                }
-            }
+    public void crearContratosProveedorCliente(String nombreCliente, String nombreProveedor, double precio, int duracionMeses)
+            throws ClienteNoEncontradoException, ProveedorNoAsociadoException {
+
+        ClienteEmpresa ce = buscarCliente(nombreCliente);
+        if (ce == null) {
+            throw new ClienteNoEncontradoException("Cliente '" + nombreCliente + "' no existe.");
+        }
+        if (ce.getListaProveedores().isEmpty()) {
+            throw new ProveedorNoAsociadoException("El cliente no tiene ningún proveedor asociado.");
+        }
+
+        Proveedor p = recorrerProveedores(ce, nombreProveedor);
+        if (p != null) {
+            p.agregarContrato(precio, duracionMeses);
+        } else {
+            throw new ProveedorNoAsociadoException("El proveedor '" + nombreProveedor + "' no está asociado a este cliente.");
         }
     }
 
