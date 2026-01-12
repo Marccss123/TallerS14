@@ -58,7 +58,6 @@ public class MainMetodos {
                             token = sc.nextLine();
                             System.out.println("Ingrese el nivel de seguridad de su metodo: ");
                             lvlSeguridad = Integer.parseInt(sc.nextLine());
-                            u.agregarAutenticacionToken(cedula, token, lvlSeguridad);
 
                             try {
                                 u.agregarAutenticacionToken(cedula, token, lvlSeguridad);
@@ -94,10 +93,9 @@ public class MainMetodos {
                             patronHuella = sc.nextLine();
                             System.out.println("Ingrese el nivel de seguridad de su metodo: ");
                             lvlSeguridad = Integer.parseInt(sc.nextLine());
-                            u.agregarAutenticacionHuella(cedula, patronHuella, lvlSeguridad);
 
                             try {
-                                u.agregarAutenticacionToken(cedula, patronHuella, lvlSeguridad);
+                                u.agregarAutenticacionHuella(cedula, patronHuella, lvlSeguridad);
                             } catch (EmpleadoNoEncontradoException e) {
                                 System.out.println("Error: " + e.getMessage());
                             }
