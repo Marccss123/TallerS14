@@ -2,6 +2,8 @@ package matriculacion.interfaz;
 
 
 
+import matriculacion.excepciones.PropietarioNoEncontradoException;
+import matriculacion.excepciones.PropietarioYaExisteException;
 import matriculacion.util.Utilitario;
 import matriculacion.negocio.Propietario;
 import matriculacion.negocio.Vehiculo;
@@ -35,63 +37,71 @@ public class MainSistemaVehiculos {
                 opc = Integer.parseInt(sc.nextLine());
                 switch (opc) {
                     case 1: {
-                        System.out.println("Ingrese cedula: ");
-                        cedula = sc.nextLine();
-                        System.out.println("Ingrese su nombre: ");
-                        nombre = sc.nextLine();
-                        System.out.println("Ingrese su telefono: ");
-                        telefono = sc.nextLine();
+                        try {
+                            System.out.println("Ingrese cedula: ");
+                            cedula = sc.nextLine();
+                            System.out.println("Ingrese su nombre: ");
+                            nombre = sc.nextLine();
+                            System.out.println("Ingrese su telefono: ");
+                            telefono = sc.nextLine();
 
-                        u.agregarPropietario(cedula, nombre, telefono);
-                    }
-                    break;
+                            u.agregarPropietario(cedula, nombre, telefono);
+                            System.out.println("¡Propietario agregado exitosamente!");
+                        }catch (PropietarioYaExisteException e){
+                            System.out.println("Error: " + e.getMessage());
+                        }
+                    }break;
                     case 2: {
                         System.out.println("Escriba la cedula del propietario al que le va a asignar un Auto: ");
                         cedula = sc.nextLine();
-                        Propietario p = u.buscarPropietario(cedula);
-                        if (p != null) {
-                            System.out.println("Ingrese marca: ");
-                            marca = sc.nextLine();
-                            System.out.println("Ingree modelo: ");
-                            modelo = sc.nextLine();
-                            System.out.println("Ingrese Tipo: ");
-                            tipo = sc.nextLine();
-                            System.out.println("Ingrese traccion: ");
-                            traccion = sc.nextLine();
-                            System.out.println("Ingrese anio: ");
-                            anio = Integer.parseInt(sc.nextLine());
 
-                            u.agregarAuto(marca, modelo, anio, p, traccion, tipo);
-                        } else {
-                            System.out.println("Propietario No Existe");
+                        try {
+                            Propietario p = u.buscarPropietario(cedula);
+
+                            if (p == null) {
+                                throw new PropietarioNoEncontradoException("El propietario con cédula " + cedula + " no existe.");
+                            }
+                                System.out.println("Ingrese marca: ");
+                                marca = sc.nextLine();
+                                System.out.println("Ingree modelo: ");
+                                modelo = sc.nextLine();
+                                System.out.println("Ingrese Tipo: ");
+                                tipo = sc.nextLine();
+                                System.out.println("Ingrese traccion: ");
+                                traccion = sc.nextLine();
+                                System.out.println("Ingrese anio: ");
+                                anio = Integer.parseInt(sc.nextLine());
+
+                                u.agregarAuto(marca, modelo, anio, p, traccion, tipo);
+                        }catch (PropietarioNoEncontradoException e) {
+                            System.out.println("Error: " + e.getMessage());
                         }
-
                     }
                     break;
                     case 3: {
                         System.out.println("Escriba la cedula del propietario al que le va a asignar una moto: ");
                         cedula = sc.nextLine();
-                        Propietario p = u.buscarPropietario(cedula);
 
-                        if (p != null) {
+                        try {
+                            Propietario p = u.buscarPropietario(cedula);
+
+                            if (p == null) {
+                                throw new PropietarioNoEncontradoException("El propietario con cédula " + cedula + " no existe.");
+                            }
                             System.out.println("Ingrese marca: ");
                             marca = sc.nextLine();
                             System.out.println("Ingrese modelo: ");
                             modelo = sc.nextLine();
-
                             System.out.println("Ingrese año: ");
-
                             anio = Integer.parseInt(sc.nextLine());
-
                             System.out.println("Ingrese altura: ");
                             altura = Double.parseDouble(sc.nextLine());
-
                             System.out.println("Ingrese arranque: ");
                             arranque = sc.nextLine();
 
                             u.agregarMoto(marca, modelo, anio, p, altura, arranque);
-                        } else {
-                            System.out.println("Propietario no encontrado o ya asignado");
+                        }catch (PropietarioNoEncontradoException e){
+                            System.out.println("Error: " + e.getMessage());
                         }
                     }
                     break;

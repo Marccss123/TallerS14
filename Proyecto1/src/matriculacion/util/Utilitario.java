@@ -4,6 +4,8 @@ import matriculacion.negocio.Auto;
 import matriculacion.negocio.Moto;
 import matriculacion.negocio.Propietario;
 import matriculacion.negocio.Vehiculo;
+import matriculacion.excepciones.PropietarioYaExisteException;
+import matriculacion.excepciones.PropietarioNoEncontradoException;
 
 import java.util.*;
 
@@ -19,13 +21,13 @@ public class Utilitario {
     }
 
     //Requerimientos aca - Metodos para guardar datos
-    public void agregarPropietario(String cedula, String nombre, String telefono){
+    public void agregarPropietario(String cedula, String nombre, String telefono) throws PropietarioYaExisteException{
         Propietario pr = buscarPropietario(cedula);
         if(pr == null){
             propietarios.add(new Propietario(cedula, nombre, telefono));
         }
         else {
-            System.out.println("El propietario ya existe");
+            throw new PropietarioYaExisteException("El propietario con cédula " + cedula + " ya está registrado.");
         }
     }
 
@@ -38,6 +40,15 @@ public class Utilitario {
         }
         return null; //En caso de que no haya encontrado
     }
+
+    public Propietario obtenerPropietario(String cedula) throws PropietarioNoEncontradoException {
+        Propietario p = buscarPropietario(cedula); // Reutilizamos tu buscador original
+        if (p == null) {
+            throw new PropietarioNoEncontradoException("No existe ningún propietario con la cédula " + cedula);
+        }
+        return p;
+    }
+
 
     public void agregarAuto(String marca, String modelo, int anio, Propietario duenio, String traccion, String tipo){
         vehiculos.add(new Auto(marca, modelo, anio, duenio,traccion,tipo));
