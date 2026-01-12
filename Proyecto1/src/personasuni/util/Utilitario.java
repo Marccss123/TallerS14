@@ -3,6 +3,7 @@ package personasuni.util;
 import personasuni.individuos.*;
 import java.util.ArrayList;
 import java.util.List;
+import personasuni.excepciones.CedulaDuplicadaException;
 
 public class Utilitario {
 
@@ -12,30 +13,30 @@ public class Utilitario {
         this.listaPersonas = new ArrayList<>();
     }
 
-    public void agregarAlumnoPregrado(String nombre, String cedula, String universidad, String carrera) {
+    public void agregarAlumnoPregrado(String nombre, String cedula, String universidad, String carrera) throws CedulaDuplicadaException {
         if (buscarPersona(cedula) == null) {
             listaPersonas.add(new AlumnoPregrado(nombre, cedula, universidad, carrera));
             System.out.println("Alumno de Pregrado agregado con éxito.");
         } else {
-            System.out.println("Error: Ya existe una persona con esa cédula.");
+            throw new CedulaDuplicadaException("Ya existe una persona registrada con la cédula " + cedula);
         }
     }
 
-    public void agregarAlumnoMagister(String nombre, String cedula, String universidad, String tesis) {
+    public void agregarAlumnoMagister(String nombre, String cedula, String universidad, String tesis) throws CedulaDuplicadaException{
         if (buscarPersona(cedula) == null) {
             listaPersonas.add(new AlumnoMagister(nombre, cedula, universidad, tesis));
             System.out.println("Alumno de Magíster agregado con éxito.");
         } else {
-            System.out.println("Error: Ya existe una persona con esa cédula.");
+            throw new CedulaDuplicadaException("Ya existe una persona registrada con la cédula " + cedula);
         }
     }
 
-    public void agregarProfesorHora(String nombre, String cedula, String especialidad, int horas) {
+    public void agregarProfesorHora(String nombre, String cedula, String especialidad, int horas) throws CedulaDuplicadaException {
         if (buscarPersona(cedula) == null) {
             listaPersonas.add(new ProfesorHora(nombre, cedula, especialidad, horas));
             System.out.println("Profesor por Hora agregado con éxito.");
         } else {
-            System.out.println("Error: Ya existe una persona con esa cédula.");
+            throw new CedulaDuplicadaException("Ya existe una persona registrada con la cédula " + cedula);
         }
     }
 

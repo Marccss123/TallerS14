@@ -1,5 +1,6 @@
 package personasuni.interfaz;
 
+import personasuni.excepciones.CedulaDuplicadaException;
 import personasuni.util.Utilitario;
 import java.util.Scanner;
 
@@ -26,21 +27,38 @@ public class MainPersonas {
                         System.out.print("Cédula: "); cedula = sc.nextLine();
                         System.out.print("Universidad: "); universidad = sc.nextLine();
                         System.out.print("Carrera: "); carrera = sc.nextLine();
-                        u.agregarAlumnoPregrado(nom, cedula, universidad, carrera);
+
+                        try {
+                            u.agregarAlumnoPregrado(nom, cedula, universidad, carrera);
+                        } catch (CedulaDuplicadaException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        }
                         break;
                     case 3:
                         System.out.print("Nombre: "); nom = sc.nextLine();
                         System.out.print("Cédula: "); cedula = sc.nextLine();
                         System.out.print("Universidad: "); universidad = sc.nextLine();
                         System.out.print("Tesis: "); tesis = sc.nextLine();
-                        u.agregarAlumnoMagister(nom, cedula, universidad, tesis);
+
+                        try {
+                            u.agregarAlumnoMagister(nom, cedula, universidad, tesis);
+                        } catch (CedulaDuplicadaException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        }
                         break;
                     case 4:
                         System.out.print("Nombre: "); nom = sc.nextLine();
                         System.out.print("Cédula: "); cedula = sc.nextLine();
                         System.out.print("Especialidad: "); especialidad = sc.nextLine();
-                        System.out.print("Horas: "); horas = Integer.parseInt(sc.nextLine());
-                        u.agregarProfesorHora(nom, cedula, especialidad, horas);
+
+                        try {
+                            System.out.print("Horas: "); horas = Integer.parseInt(sc.nextLine());
+                            u.agregarProfesorHora(nom, cedula, especialidad, horas);
+                        } catch (CedulaDuplicadaException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        } catch (NumberFormatException e) {
+                            System.out.println("Error: Las horas deben ser un número.");
+                        }
                         break;
                     case 5: u.listarAlumnosPregrado(); break;
                     case 6: u.listarAlumnosMagister(); break;

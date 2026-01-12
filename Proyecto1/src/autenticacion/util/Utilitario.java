@@ -4,6 +4,7 @@ import autenticacion.negocio.Empleado;
 import autenticacion.negocio.HuellaDigital;
 import autenticacion.negocio.ReconocimientoFacial;
 import autenticacion.negocio.TokenSeguridad;
+import autenticacion.excepciones.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,12 +20,13 @@ public class Utilitario {
         return listaEmpleados;
     }
 
-    public void agregarEmpleado(String cedula, String nombre) {
+    public void agregarEmpleado(String cedula, String nombre) throws EmpleadoYaExisteException {
         int indice = buscarEmpleado(cedula);
         if (indice == -1) {
             listaEmpleados.add(new Empleado(cedula, nombre));
+            System.out.println("Empleado agregado exitosamente.");
         } else {
-            System.out.printf("Empleado con la cedula %s ya existe\n", cedula);
+            throw new EmpleadoYaExisteException("El empleado con cédula " + cedula + " ya existe.");
         }
     }
 
@@ -37,28 +39,40 @@ public class Utilitario {
         return -1;
     }
 
-    public void agregarAutenticacionHuella(String cedula, String huella, int lvlsSeguridad) {
+    public void agregarAutenticacionHuella(String cedula, String huella, int lvlsSeguridad) throws EmpleadoNoEncontradoException {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             listaEmpleados.get(indice).adicionarAutenticacion(new HuellaDigital(lvlsSeguridad, huella));
+            System.out.println("Huella agregada.");
+        } else {
+            throw new EmpleadoNoEncontradoException("No se puede agregar huella: Empleado no existe.");
         }
     }
 
-    public void agregarAutenticacionToken(String cedula, String token, int lvlsSeguridad) {
+    public void agregarAutenticacionToken(String cedula, String token, int lvlsSeguridad) throws EmpleadoNoEncontradoException {
         int indice = buscarEmpleado(cedula);
         if (indice != -1) {
             listaEmpleados.get(indice).adicionarAutenticacion(new TokenSeguridad(lvlsSeguridad, token));
+            System.out.println("Token agregado.");
+        } else {
+            throw new EmpleadoNoEncontradoException("No se puede agregar token: Empleado no existe.");
         }
     }
 
-    public void agregarAutenticacionRostro(String cedula, String patronRostro, int lvlsSeguridad) {
+    public void agregarAutenticacionRostro(String cedula, String patronRostro, int lvlsSeguridad)
+            throws EmpleadoNoEncontradoException, RostroYaRegistradoException {
+
         int indice = buscarEmpleado(cedula);
+
         if (indice != -1) {
             if (cantidadAutenticacionRostro(cedula) == 0) {
                 listaEmpleados.get(indice).adicionarAutenticacion(new ReconocimientoFacial(lvlsSeguridad, patronRostro));
+                System.out.println("Rostro agregado.");
             } else {
-                System.out.println("El empleado ya tiene un rostro registrado.");
+                throw new RostroYaRegistradoException("El empleado ya tiene un rostro registrado.");
             }
+        } else {
+            throw new EmpleadoNoEncontradoException("No se puede agregar rostro: Empleado no existe.");
         }
     }
 

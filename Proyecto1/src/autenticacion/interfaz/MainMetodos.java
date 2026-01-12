@@ -1,5 +1,8 @@
 package autenticacion.interfaz;
 
+import autenticacion.excepciones.EmpleadoNoEncontradoException;
+import autenticacion.excepciones.EmpleadoYaExisteException;
+import autenticacion.excepciones.RostroYaRegistradoException;
 import autenticacion.util.Utilitario;
 
 import java.util.InputMismatchException;
@@ -34,14 +37,14 @@ public class MainMetodos {
                     case 1: {
                         System.out.println("Ingrese la cedula del empledo que deseea agregar: ");
                         cedula = sc.nextLine();
-                        int indiceEm = u.buscarEmpleado(cedula);
 
-                        if (indiceEm == -1) {
-                            System.out.println("Ingrese el nombre: ");
-                            nombre = sc.nextLine();
+                        System.out.println("Ingrese el nombre: ");
+                        nombre = sc.nextLine();
+
+                        try {
                             u.agregarEmpleado(cedula, nombre);
-                        } else {
-                            System.out.println("Empleado ya existe");
+                        } catch (EmpleadoYaExisteException e) {
+                            System.out.println("Error: " + e.getMessage());
                         }
                     }
                     break;
@@ -56,24 +59,28 @@ public class MainMetodos {
                             System.out.println("Ingrese el nivel de seguridad de su metodo: ");
                             lvlSeguridad = Integer.parseInt(sc.nextLine());
                             u.agregarAutenticacionToken(cedula, token, lvlSeguridad);
-                        } else {
-                            System.out.println("No existe Empleado con esa cedula");
-                        }
-                    }
-                    break;
-                    case 3: {
-                        System.out.println("Ingrese la cedula del empleado al que le quiere añadir el rostro");
-                        cedula = sc.nextLine();
-                        int indiceEm = u.buscarEmpleado(cedula);
 
-                        if (indiceEm != -1) {
-                            System.out.println("Ingrese el patron del rostro: ");
-                            patronRostro = sc.nextLine();
-                            System.out.println("Ingrese el nivel de seguridad de su metodo: ");
-                            lvlSeguridad = Integer.parseInt(sc.nextLine());
+                            try {
+                                u.agregarAutenticacionToken(cedula, token, lvlSeguridad);
+                            } catch (EmpleadoNoEncontradoException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            }
+                        }
+                    }break;
+                    case 3: {
+                        System.out.println("Ingrese la cedula del empleado:");
+                        cedula = sc.nextLine();
+                        System.out.println("Ingrese el patron del rostro: ");
+                        patronRostro = sc.nextLine();
+                        System.out.println("Nivel de seguridad: ");
+                        lvlSeguridad = Integer.parseInt(sc.nextLine());
+
+                        try {
                             u.agregarAutenticacionRostro(cedula, patronRostro, lvlSeguridad);
-                        } else {
-                            System.out.println("No existe Empleado con esa cedula");
+                        } catch (EmpleadoNoEncontradoException e) {
+                            System.out.println("Error: " + e.getMessage());
+                        } catch (RostroYaRegistradoException e) {
+                            System.out.println("Regla de Negocio: " + e.getMessage());
                         }
                     }
                     break;
@@ -88,8 +95,12 @@ public class MainMetodos {
                             System.out.println("Ingrese el nivel de seguridad de su metodo: ");
                             lvlSeguridad = Integer.parseInt(sc.nextLine());
                             u.agregarAutenticacionHuella(cedula, patronHuella, lvlSeguridad);
-                        } else {
-                            System.out.println("No existe Empleado con esa cedula");
+
+                            try {
+                                u.agregarAutenticacionToken(cedula, patronHuella, lvlSeguridad);
+                            } catch (EmpleadoNoEncontradoException e) {
+                                System.out.println("Error: " + e.getMessage());
+                            }
                         }
                     }
                     break;
